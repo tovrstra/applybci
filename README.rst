@@ -26,9 +26,9 @@ You should get the following output
     Detected 9 real numbers in title line.
     Treating system as periodic with the following cell vectors
     in Angstrom. (Cell vectors are displayed as rows.)
-    [[ 26.08794    0.         0.      ]
-     [-13.04388   22.5927     0.      ]
-     [  0.         0.        28.627584]]
+    [[ 13.80514326   0.           0.        ]
+     [ -6.902524    11.95554191   0.        ]
+     [  0.           0.          15.14906498]]
 
     Reading atom type rules
         H           1

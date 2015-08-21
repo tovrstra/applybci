@@ -88,7 +88,7 @@ def load_system(fn):
             rvecs = np.array(real_numbers[:9]).reshape(3, 3)*angstrom
             print 'Treating system as periodic with the following cell vectors'
             print 'in Angstrom. (Cell vectors are displayed as rows.)'
-            print rvecs
+            print rvecs/angstrom
         else:
             print 'I\'m assuming the system is aperiodic because there are less'
             print 'than nine real numbers in the title line.'
