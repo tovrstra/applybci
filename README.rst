@@ -17,13 +17,13 @@ the script is executed as follows:
 
 .. code-block:: bash
 
-    ./applybci.py SAPO-34_1Si_O1.xyz rules.txt parameters.txt
+    ./applybci.py SAPO-34_1Si_O1.cube rules.txt parameters.txt
 
 You should get the following output
 
 .. code-block:: text
 
-    Detected 9 real numbers in title line.
+    Loading atomic structure from CUBE file.
     Treating system as periodic with the following cell vectors
     in Angstrom. (Cell vectors are displayed as rows.)
     [[ 13.80514326   0.           0.        ]

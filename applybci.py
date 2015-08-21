@@ -33,13 +33,8 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description='Tool to compute charges with '
                                      'bond-charge increments')
     parser.add_argument('filename_system', metavar='XYZ',
-                        help='an XYZ file with optionally '
-                        'the cell parameters in the title line. The first nine numbers '
-                        'encountered in the title line are interpreted as a_x, a_y, a_z, '
-                        'b_x, b_y, b_z, c_x, c_y and c_z, in Ansgtrom. Words that '
-                        'can\'t be converted to real numbers are ignored. If less than '
-                        'nine numbers are encountered, the system is assumed to be '
-                        'aperiodic.')
+                        help='an XYZ or CUBE file with the atomic structure (and '
+                        'periodic boundary conditions).')
     parser.add_argument('filename_rules', metavar='RULES',
                         help='A filename with atom type '
                         'rules. In-line comments start with a #. Empty lines are '
@@ -70,9 +65,45 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def load_system(fn):
+def load_system_cube(fn):
+    '''Load system from fn in cube format'''
+    # TODO: this should be moved into Yaff/MolMod
+    print 'Loading atomic structure from CUBE file.'
+    with open(fn) as f:
+        # Skip two header lines.
+        f.next()
+        f.next()
+        # Read number of atoms.
+        natom = int(f.next().split()[0])
+        assert natom > 0
+        # Read real-space vectors
+        rvecs = np.zeros((3, 3), float)
+        for irow in xrange(3):
+            words = f.next().split()
+            nrep = int(words[0])
+            rvecs[irow, 0] = nrep*float(words[1])
+            rvecs[irow, 1] = nrep*float(words[2])
+            rvecs[irow, 2] = nrep*float(words[3])
+        print 'Treating system as periodic with the following cell vectors'
+        print 'in Angstrom. (Cell vectors are displayed as rows.)'
+        print rvecs/angstrom
+        # Read atomic numbers and coordinates
+        numbers = np.zeros(natom, int)
+        coordinates = np.zeros((natom, 3), float)
+        for iatom in xrange(natom):
+            words = f.next().split()
+            numbers[iatom] = int(words[0])
+            coordinates[iatom, 0] = float(words[2])
+            coordinates[iatom, 1] = float(words[3])
+            coordinates[iatom, 2] = float(words[4])
+    print
+    return System(numbers=numbers, pos=coordinates, rvecs=rvecs)
+
+
+def load_system_xyz(fn):
     '''Load atomic numbers, coordinates and cell parameters from fn'''
     # Load the cell vectors from the second line.
+    print 'Loading atomic structure from XYZ file.'
     with open(fn) as f:
         # Skip one line.
         f.next()
@@ -93,10 +124,20 @@ def load_system(fn):
             print 'I\'m assuming the system is aperiodic because there are less'
             print 'than nine real numbers in the title line.'
             rvecs = None
-        print
 
-    # Let Yaff read the file.
+    # Let Yaff read the rest of the file.
+    print
     return System.from_file(fn, rvecs=rvecs)
+
+
+def load_system(fn):
+    '''Load system from fn as XYZ or CUBE file'''
+    if fn.endswith('.xyz'):
+        return load_system_xyz(fn)
+    elif fn.endswith('.cube'):
+        return load_system_cube(fn)
+    else:
+        raise NotImplementedError('Unknown file extension for system file "%s".' % fn)
 
 
 def words_without_comments(f):
