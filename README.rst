@@ -17,14 +17,15 @@ the script is executed as follows:
 
 .. code-block:: bash
 
-    ./applybci.py SAPO-34_1Si_O1.xyz rules.txt parameters.tx
+    ./applybci.py SAPO-34_1Si_O1.xyz rules.txt parameters.txt
 
 You should get the following output
 
 .. code-block:: text
 
-    Detected 9 real numbers in title line
-    Treating system as periodic with the following cell vectors in Angstrom. Cell vectors are displayed as rows.
+    Detected 9 real numbers in title line.
+    Treating system as periodic with the following cell vectors
+    in Angstrom. (Cell vectors are displayed as rows.)
     [[ 26.08794    0.         0.      ]
      [-13.04388   22.5927     0.      ]
      [  0.         0.        28.627584]]
@@ -43,7 +44,7 @@ You should get the following output
         Number of atoms:            111
         Number of bonds (12 pairs): 147
         Number of 13 pairs:         294
-        Number of atoms by type:
+        Number of atoms by type
             H               3
             O_AlSi          9
             O_AlP          60
@@ -51,7 +52,7 @@ You should get the following output
             Al             18
             Si              3
             P              15
-        Number of bonds (12 pairs) by type:
+        Number of bonds (12 pairs) by type
             H           O_AlSiH         3
             O_AlSi      Al              9
             O_AlSi      Si              9
@@ -59,7 +60,7 @@ You should get the following output
             O_AlP       P              60
             O_AlSiH     Al              3
             O_AlSiH     Si              3
-        Number of 13 pairs by type:
+        Number of 13 pairs by type
             H           Al              3
             H           Si              3
             O_AlSi      O_AlSi          9
@@ -205,4 +206,4 @@ You should get the following output
                  P     -3.0175     -5.2164      6.6168      0.6804
 
 For more information on the file formats and command-line arguments, run the script with
-the -h option.
+the ``-h`` option.

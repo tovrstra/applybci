@@ -83,15 +83,15 @@ def load_system(fn):
                 real_numbers.append(float(word))
             except ValueError:
                 pass
-        print 'Detected %i real numbers in title line' % len(real_numbers)
+        print 'Detected %i real numbers in title line.' % len(real_numbers)
         if len(real_numbers) >= 9:
             rvecs = np.array(real_numbers[:9]).reshape(3, 3)
-            print 'Treating system as periodic with the following cell vectors in ' \
-                  'Angstrom. Cell vectors are displayed as rows.'
+            print 'Treating system as periodic with the following cell vectors'
+            print 'in Angstrom. (Cell vectors are displayed as rows.)'
             print rvecs
         else:
-            print 'I\'m assuming the system is aperiodic because there are less than ' \
-                  'nine real numbers in the title line.'
+            print 'I\'m assuming the system is aperiodic because there are less'
+            print 'than nine real numbers in the title line.'
             rvecs = None
         print
 
@@ -143,7 +143,7 @@ def print_bonds_ffatypes(system):
     print '    Number of atoms:            %i' % system.natom
     print '    Number of bonds (12 pairs): %i' % system.nbond
     print '    Number of 13 pairs:         %i' % len(system.one_three_pairs)
-    print '    Number of atoms by type:'
+    print '    Number of atoms by type'
     for ffatype_id, ffatype in enumerate(system.ffatypes):
         print '        %s  %5i' % (ffatype.ljust(10), (system.ffatype_ids==ffatype_id).sum())
 
@@ -158,9 +158,9 @@ def print_bonds_ffatypes(system):
             ffatype1 = system.ffatypes[ffatype_id1]
             print '        %s  %s  %5i' % (ffatype0.ljust(10), ffatype1.ljust(10), count)
 
-    print '    Number of bonds (12 pairs) by type:'
+    print '    Number of bonds (12 pairs) by type'
     print_pair_stats(system.bonds)
-    print '    Number of 13 pairs by type:'
+    print '    Number of 13 pairs by type'
     print_pair_stats(system.one_three_pairs)
 
 
