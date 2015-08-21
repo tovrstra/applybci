@@ -36,7 +36,7 @@ def parse_arguments():
                         help='an XYZ file with optionally '
                         'the cell parameters in the title line. The first nine numbers '
                         'encountered in the title line are interpreted as a_x, a_y, a_z, '
-                        'b_x, b_y, b_z, c_x, c_y and c_z, respectively. Words that '
+                        'b_x, b_y, b_z, c_x, c_y and c_z, in Ansgtrom. Words that '
                         'can\'t be converted to real numbers are ignored. If less than '
                         'nine numbers are encountered, the system is assumed to be '
                         'aperiodic.')
@@ -85,7 +85,7 @@ def load_system(fn):
                 pass
         print 'Detected %i real numbers in title line.' % len(real_numbers)
         if len(real_numbers) >= 9:
-            rvecs = np.array(real_numbers[:9]).reshape(3, 3)
+            rvecs = np.array(real_numbers[:9]).reshape(3, 3)*angstrom
             print 'Treating system as periodic with the following cell vectors'
             print 'in Angstrom. (Cell vectors are displayed as rows.)'
             print rvecs
